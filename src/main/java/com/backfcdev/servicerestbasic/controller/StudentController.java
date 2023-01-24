@@ -3,6 +3,10 @@ package com.backfcdev.servicerestbasic.controller;
 import com.backfcdev.servicerestbasic.model.Student;
 import com.backfcdev.servicerestbasic.service.IStudentService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +23,10 @@ public class StudentController {
     private final static HashMap<String, Object> response = new HashMap<>();
 
     @GetMapping
-    ResponseEntity<List<Student>> getAllStudents(){
-        return ResponseEntity.ok(studentService.findAll());
+    ResponseEntity<Page<Student>> index(
+            @PageableDefault(size = 5, sort = "name", direction = Sort.Direction.ASC) Pageable pageable
+    ) {
+        return ResponseEntity.ok(studentService.findAll(pageable));
     }
 
     @GetMapping("/{dni}")

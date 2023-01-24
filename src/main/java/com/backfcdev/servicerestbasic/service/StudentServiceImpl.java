@@ -5,6 +5,8 @@ import com.backfcdev.servicerestbasic.exception.StudentNotFoundException;
 import com.backfcdev.servicerestbasic.model.Student;
 import com.backfcdev.servicerestbasic.repository.IStudentRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +17,8 @@ public class StudentServiceImpl implements IStudentService{
     private final IStudentRepository studentRepository;
 
     @Override
-    public List<Student> findAll() {
-        return studentRepository.findAll();
+    public Page<Student> findAll(Pageable pageable) {
+        return studentRepository.findAll(pageable);
     }
 
     @Override
